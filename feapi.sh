@@ -556,8 +556,10 @@ while [[ $# -gt 0 ]]; do
         -ca|--create-alias)
         MODE="create-alias"
         CREATE_ALIAS="$2"
+        CREATE_ALIAS_RECIPIENTS="$3"
         shift # past argument
         shift # past value
+        shift # past recipients
         ;;
         -da|--delete-alias)
         MODE="delete-alias"
@@ -633,13 +635,13 @@ elif [[ $MODE == "view-alias" ]]; then
     fi
 # -- create-alias
 elif [[ $MODE == "create-alias" ]]; then
-    _debug "create-alias args: ${CREATE_ALIAS}"
+    _debug "create-alias args: ${CREATE_ALIAS} ${CREATE_ALIAS_RECIPIENTS}"
     if [[ -z $CREATE_ALIAS ]]; then
         usage
         _error "No alias specified"
         exit 1
     else
-        create_alias $CREATE_ALIAS
+        create_alias "$CREATE_ALIAS" "$CREATE_ALIAS_RECIPIENTS"
     fi
 # -- delete-alias
 elif [[ $MODE == "delete-alias" ]]; then
